@@ -16,3 +16,4 @@ myapp.config(function($stateProvider, $urlRouterProvider){
             templateUrl: "vitalsigns.html"
         })
     })
+    

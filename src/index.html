@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html ng-app="app" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,9 +11,6 @@
     <link rel="icon" href="redheart.png">
 
     <title>Dashboard Template for Bootstrap</title>
-    <script src="third_party/angular.min.js"></script>
-    <script src="third_party/angular-ui-router.min.js"></script>
-    <script src="js/app.js"></script>
 
     <!-- Bootstrap core CSS -->
     <link href="third_party/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -54,7 +51,7 @@
             <li><a href="#">Help</a></li>
           </ul>
           <form class="navbar-form navbar-right">
-            <input type="text" ng-model="yourName" class="form-control" placeholder="Search...">
+            <input type="text" class="form-control" placeholder="Search...">
           </form>
         </div>
       </div>
@@ -64,8 +61,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a ui-sref="finance">Finance<span class="sr-only">(current)</span></a></li>
-            <li><a ui-sref="vitalsigns">Vital Signs</a></li>
+            <li class="active"><a href="#">Finance<span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Vital Signs</a></li>
             <li><a href="#">Input Output</a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -77,9 +74,8 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header" ng-cloak>Hello {{yourName}}!</h1>
+          <h1 class="page-header">Hello!</h1>
 
-          <div class="well" ui-view></div>
 
       <!-- D3FC Low Barrel -->
 				<svg id="low-barrel">
