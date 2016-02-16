@@ -1,5 +1,29 @@
 /* global d3:false, fc:false */
-exampleChartStamp = function(d3, fc, example) {
+
+
+/*
+This file will describe all the pieces required to draw a Vital Signs chart.
+This includes:
+- individual 'graphs' for each clinical measurement
+  - Heart Rate
+  - Blood Pressure
+  ...
+  With appropriate annotations to provide scale.
+  These graphs should be able to be reused by other charts in the future.
+
+- A nav chart componant which gets linked to instances of the above charts.
+- a function which stamps an instance the VS chart onto an svg selection
+
+This means there are three distinct parts to this file. They might be disperced into separate files in the future.
+1. define some graphs and other d3fc style componants
+2. define the VS chart 'componant'
+3. make some dummy data, stamp out a VSChart to the page.
+*/
+uncharted = {}
+uncharted.graphs = {}
+uncharted.charts = {}
+
+makeGraphs = function(d3, fc, example) {
     "use strict";
 
     var formatters = {
@@ -322,59 +346,58 @@ exampleChartStamp = function(d3, fc, example) {
         return navigatorChart;
     };
 
-    example.lowBarrel = function() {
-        var event = d3.dispatch("navigate", "crosshair");
+    //return example
 
-        var bisector = d3.bisector(function(d) { return d.date; });
-
-        var mainChart = example.mainChart()
-            .on("crosshair", event.crosshair)
-            .on("zoom", event.navigate);
-
-        var volumeChart = example.volumeChart()
-            .on("crosshair", event.crosshair);
-
-        var navigatorChart = example.navigatorChart()
-            .on("brush", event.navigate);
-
-        function lowBarrel(selection) {
-
-            selection.each(function(data) {
-                // Calculate visible data for main/volume charts
-                var visibleData = data.slice(
-                    // Pad and clamp the bisector values to ensure extents can be calculated
-                    Math.max(0, bisector.left(data, data.dateDomain[0]) - 1),
-                    Math.min(bisector.right(data, data.dateDomain[1]) + 1, data.length)
-                );
-                visibleData.dateDomain = data.dateDomain;
-                visibleData.crosshairs = data.crosshairs;
-
-                var container = d3.select(this);
-
-                container.select("svg.main")
-                    .datum(visibleData)
-                    .call(mainChart);
-
-                container.select("svg.volume")
-                    .datum(visibleData)
-                    .call(volumeChart);
-
-                container.select("svg.navigator")
-                    .datum(data)
-                    .call(navigatorChart);
-            });
-        }
-
-        d3.rebind(lowBarrel, event, "on");
-
-        return lowBarrel;
-    };
-
-    return example
+}(d3, fc, uncharted.graphs)
 
 
-}(d3, fc, {});
+uncharted.charts.vitalsigns = function() {
+    var event = d3.dispatch("navigate", "crosshair");
 
+    var bisector = d3.bisector(function(d) { return d.date; });
+
+    var mainChart = uncharted.graphs.mainChart()
+        .on("crosshair", event.crosshair)
+        .on("zoom", event.navigate);
+
+    var volumeChart = uncharted.graphs.volumeChart()
+        .on("crosshair", event.crosshair);
+
+    var navigatorChart = uncharted.graphs.navigatorChart()
+        .on("brush", event.navigate);
+
+    function lowBarrel(selection) {
+
+        selection.each(function(data) {
+            // Calculate visible data for main/volume charts
+            var visibleData = data.slice(
+                // Pad and clamp the bisector values to ensure extents can be calculated
+                Math.max(0, bisector.left(data, data.dateDomain[0]) - 1),
+                Math.min(bisector.right(data, data.dateDomain[1]) + 1, data.length)
+            );
+            visibleData.dateDomain = data.dateDomain;
+            visibleData.crosshairs = data.crosshairs;
+
+            var container = d3.select(this);
+
+            container.select("svg.main")
+                .datum(visibleData)
+                .call(mainChart);
+
+            container.select("svg.volume")
+                .datum(visibleData)
+                .call(volumeChart);
+
+            container.select("svg.navigator")
+                .datum(data)
+                .call(navigatorChart);
+        });
+    }
+
+    d3.rebind(lowBarrel, event, "on");
+
+    return lowBarrel;
+};
 
 
 var data = fc.data.random.financial()
@@ -397,7 +420,7 @@ stamp = function(selection, data) {
             .call(lowBarrel);
     });
 
-    var lowBarrel = exampleChartStamp.lowBarrel()
+    var lowBarrel = uncharted.charts.vitalsigns()
         .on("crosshair", render)
         .on("navigate", function(domain) {
             data.dateDomain = [
@@ -410,6 +433,6 @@ stamp = function(selection, data) {
     render();
 };
 
-stamp(d3.select("#low-barrel"), data)
+stamp(d3.select("#vital-signs-chart"), data)
 
 //$(window).resize(fc.util.render(render));

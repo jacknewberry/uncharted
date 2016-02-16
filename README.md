@@ -33,7 +33,7 @@ Uncharted brings these benefits:
  - chart list
   * select another chart
   * add a new chart
-  
+
 #### Charts:
 - vital signs
  - HR, BP, Temp, O2 sats and delivery, RR
@@ -56,18 +56,18 @@ Uncharted brings these benefits:
 ## Step-by-step plan:
 
 - [x] set up git repository
-- [ ] write step-by-step plan
-- [ ] install a bootstrap template page, such as [the 'dashboard' example](http://getbootstrap.com/examples/dashboard/)
-- [ ] split the page into a headerBar, chartList, and chartArea
-- [ ] make the chart list and chart Area scroll independently of each other
+- [x] write step-by-step plan
+- [x] install a bootstrap template page, such as [the 'dashboard' example](http://getbootstrap.com/examples/dashboard/)
+- [x] split the page into a headerBar, chartList, and chartArea
+- [x] make the chart list and chart Area scroll independently of each other
 - [ ] populate the chart list with a few buttons which respond to clicks by changing the chartArea
-- [ ] put [this example chart](https://d3fc.io/examples/low-barrel/index.html) into one of the chart views
+- [x] put [this example chart](https://d3fc.io/examples/low-barrel/index.html) into one of the chart views
 - [ ] it should disappear if another chart is selected, and reload when re-selected.
 - [ ] make it scroll and scale appropriately if the page is panned or resized
 - [ ] duplicate the example chart
 
 _Chart Stream:_
-Develop the vital signs chart:
+
 - [ ] Make one graph of this chart have bars for blood pressure
 - [ ] change the other into a line graph for heart rate
 - [ ] replace the d3fc example data with some more realistic faux clinical measurements

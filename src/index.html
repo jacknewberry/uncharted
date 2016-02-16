@@ -58,7 +58,7 @@
     </nav>
 
     <div class="container-fluid">
-      <div class="row">
+      <div class="row"> <!-- chart menu 'sidebar' | chart area 'main'-->
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Finance<span class="sr-only">(current)</span></a></li>
@@ -73,37 +73,68 @@
             <li><a href="">+ Add chart</a></li>
           </ul>
         </div>
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Hello!</h1>
+          <h4 class="page-header">Hello!</h4>
+
+          <!-- D3FC Low Barrel -->
+  				<svg id="low-barrel">
+  				  <g layout-style="flex: 0.5; flexDirection: row">
+  				    <svg class="main" layout-style="flex: 1"></svg>
+
+              <!-- TODO: labels should be rendered by their graph -->
+  				    <g layout-style="width: 20; justifyContent: center">
+  				      <g layout-style="height: 0">
+  				        <text text-anchor="middle" transform="rotate(90)">OHLC</text>
+  				      </g>
+  				    </g>
+
+  				  </g>
+  				  <g layout-style="flex: 0.2; flexDirection: row">
+  				    <svg class="volume" layout-style="flex: 1"></svg>
+  				    <g layout-style="width: 20; justifyContent: center">
+  				      <g layout-style="height: 0">
+  				        <text text-anchor="middle" transform="rotate(90)">Volume</text>
+  				      </g>
+  				    </g>
+  				  </g>
+  				  <g layout-style="flex: 0.15; flexDirection: row">
+  				    <svg class="navigator" layout-style="flex: 1"></svg>
+  				    <text layout-style="width: 20"></text>
+  				  </g>
+  				</svg>
+  		    <!-- End D3FC Low Barrel -->
 
 
-      <!-- D3FC Low Barrel -->
-				<svg id="low-barrel">
-				  <g layout-style="flex: 0.65; flexDirection: row">
-				    <svg class="main" layout-style="flex: 1"></svg>
+          <!-- Vitals Signs-->
+  				<svg id="vital-signs-chart">
 
-            <!-- TODO: labels should be rendered by their graph -->
-				    <g layout-style="width: 20; justifyContent: center">
-				      <g layout-style="height: 0">
-				        <text text-anchor="middle" transform="rotate(90)">OHLC</text>
-				      </g>
-				    </g>
+  				  <g layout-style="flex: 0.65; flexDirection: row">
+  				    <svg class="main" layout-style="flex: 1"></svg>
+              <!-- TODO: labels should be rendered by their graph -->
+  				    <g layout-style="width: 20; justifyContent: center">
+  				      <g layout-style="height: 0">
+  				        <text text-anchor="middle" transform="rotate(90)">OHLC</text>
+  				      </g>
+  				    </g>
+  				  </g>
 
-				  </g>
-				  <g layout-style="flex: 0.2; flexDirection: row">
-				    <svg class="volume" layout-style="flex: 1"></svg>
-				    <g layout-style="width: 20; justifyContent: center">
-				      <g layout-style="height: 0">
-				        <text text-anchor="middle" transform="rotate(90)">Volume</text>
-				      </g>
-				    </g>
-				  </g>
-				  <g layout-style="flex: 0.15; flexDirection: row">
-				    <svg class="navigator" layout-style="flex: 1"></svg>
-				    <text layout-style="width: 20"></text>
-				  </g>
-				</svg>
-			<!-- End D3FC Low Barrel -->
+  				  <g layout-style="flex: 0.2; flexDirection: row">
+  				    <svg class="volume" layout-style="flex: 1"></svg>
+  				    <g layout-style="width: 20; justifyContent: center">
+  				      <g layout-style="height: 0">
+  				        <text text-anchor="middle" transform="rotate(90)">Volume</text>
+  				      </g>
+  				    </g>
+  				  </g>
+
+  				  <g layout-style="flex: 0.15; flexDirection: row">
+  				    <svg class="navigator" layout-style="flex: 1"></svg>
+  				    <text layout-style="width: 20"></text>
+  				  </g>
+
+  				</svg>
+  			  <!-- End Vitals Signs -->
 
 
           <div class="table-responsive">
@@ -246,6 +277,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3fc/5.3.0/d3fc.bundle.min.js"></script>
 
     <script src="js/finance.js"></script>
+    <script src="js/vitalsigns.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!--script src="../../assets/js/ie10-viewport-bug-workaround.js"></script-->
