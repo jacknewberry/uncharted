@@ -19,10 +19,10 @@ This means there are three distinct parts to this file. They might be disperced 
 2. define the VS chart 'componant'
 3. make some dummy data, stamp out a VSChart to the page.
 */
-uncharted = {}
-uncharted.graphs = {}
-uncharted.charts = {}
-
+uncharted = {
+	graphs:{},
+	charts:{}
+}
 makeGraphs = function(d3, fc, example) {
     "use strict";
 
@@ -351,7 +351,17 @@ makeGraphs = function(d3, fc, example) {
 }(d3, fc, uncharted.graphs)
 
 
-uncharted.charts.vitalsigns = function() {
+uncharted.charts.vitalsigns = function(selection, data) {
+
+  var container = selection.layout(); // this is using a facebook javascript flexbox implimentation bundled in d3fc to position the charts.
+
+  var render = fc.util.render(function() {
+      container.datum(data)
+          .call(chart);
+  });
+
+
+  lowBarrel = function(){
     var event = d3.dispatch("navigate", "crosshair");
 
     var bisector = d3.bisector(function(d) { return d.date; });
@@ -366,7 +376,7 @@ uncharted.charts.vitalsigns = function() {
     var navigatorChart = uncharted.graphs.navigatorChart()
         .on("brush", event.navigate);
 
-    function lowBarrel(selection) {
+    function LB() {
 
         selection.each(function(data) {
             // Calculate visible data for main/volume charts
@@ -394,9 +404,26 @@ uncharted.charts.vitalsigns = function() {
         });
     }
 
-    d3.rebind(lowBarrel, event, "on");
+    d3.rebind(LB, event, "on");
 
-    return lowBarrel;
+    return LB
+  }
+
+
+
+    var chart = lowBarrel()
+        .on("crosshair", render)
+        .on("navigate", function(domain) {
+            data.dateDomain = [
+                new Date(Math.max(domain[0], data.navigatorDateDomain[0])),
+                new Date(Math.min(domain[1], data.navigatorDateDomain[1]))
+            ];
+            render();
+        });
+
+    render();
+
+    return chart
 };
 
 
@@ -412,27 +439,8 @@ data.navigatorDateDomain = fc.util.extent().fields("date")(data);
 data.navigatorYDomain = fc.util.extent().fields("close")(data);
 
 
-stamp = function(selection, data) {
-    var container = selection.layout(); // Not sure what this does
 
-    var render = fc.util.render(function() {
-        container.datum(data)
-            .call(lowBarrel);
-    });
-
-    var lowBarrel = uncharted.charts.vitalsigns()
-        .on("crosshair", render)
-        .on("navigate", function(domain) {
-            data.dateDomain = [
-                new Date(Math.max(domain[0], data.navigatorDateDomain[0])),
-                new Date(Math.min(domain[1], data.navigatorDateDomain[1]))
-            ];
-            render();
-        });
-
-    render();
-};
-
-stamp(d3.select("#vital-signs-chart"), data)
+uncharted.charts.vitalsigns(d3.select("#vital-signs-chart"), data)
+//uncharted.charts.vitalsigns(d3.select("#low-barrel"), data)
 
 //$(window).resize(fc.util.render(render));

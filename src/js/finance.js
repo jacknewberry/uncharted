@@ -110,7 +110,6 @@ exampleChartStamp = function(d3, fc, example) {
             .plotArea(multi);
 
         function mainChart(selection) {
-
             selection.each(function(data) {
 
                 crosshairs.snap(fc.util.seriesPointSnapXOnly(candlestick, data));
@@ -175,7 +174,7 @@ exampleChartStamp = function(d3, fc, example) {
     };
 
     example.volumeChart = function() {
-
+        //console.log("_finance.example.volumeChart")
         var event = d3.dispatch("crosshair");
 
         var chart = fc.chart.cartesian(fc.scale.dateTime())
@@ -212,7 +211,7 @@ exampleChartStamp = function(d3, fc, example) {
         chart.plotArea(multi);
 
         function volumeChart(selection) {
-
+            //console.log("_finance.example.volumeChart.volumeChart")
             selection.each(function(data) {
 
                 chart.xDomain(data.dateDomain)
@@ -409,7 +408,7 @@ stamp = function(selection, data) {
 
     render();
 };
-
+console.log(data)
 stamp(d3.select("#low-barrel"), data)
 
 //$(window).resize(fc.util.render(render));
