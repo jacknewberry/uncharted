@@ -34,7 +34,7 @@ Uncharted brings these benefits:
   * select another chart
   * add a new chart
 
-#### Charts:
+#### MVP Charts:
 - vital signs
  - HR, BP, Temp, O2 sats and delivery, RR
 
@@ -64,14 +64,14 @@ Uncharted brings these benefits:
 - [x] put [this example chart](https://d3fc.io/examples/low-barrel/index.html) into one of the chart views
 - [ ] it should disappear if another chart is selected, and reload when re-selected.
 - [ ] make it scroll and scale appropriately if the page is panned or resized
-- [ ] duplicate the example chart
+- [x] duplicate the example chart
 
 _Chart Stream:_
 
 - [ ] Make one graph of this chart have bars for blood pressure
-- [ ] change the other into a line graph for heart rate
-- [ ] replace the d3fc example data with some more realistic faux clinical measurements
-- [ ] apply a straight horizontal value labels appear just above/below the bars
+- [x] change the other into a line graph for heart rate
+- [ ] replace the d3fc example data with some more realistic dummy clinical measurements
+- [ ] display d3fc line annotations to give better context to the data
 - [ ] also display the value labels for the maximum, minimum, and most recent data points
 - [ ] take the team out for dinner
 - [ ] write more step-by-step instructions, the next focus is data entry

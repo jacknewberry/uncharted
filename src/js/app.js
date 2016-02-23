@@ -1,29 +1,22 @@
-un = {
-	graphs:{},
-	charts:{}
-}
+// requires uncharted
 
 // Define some graphs
 un.graphs.HR = function(){
-  console.log("_un.graphs.HR")
   /*
     Initialise a heart rate graph.
   */
   var event = d3.dispatch("crosshair", "zoom");
 
   var xScale = d3.time.scale();
-  var chart = fc.chart.cartesian(xScale
-          /*d3.scale.linear(),
-          d3.scale.linear()*/)
-      .xDomain([0, 170]) // minutes
-      .yDomain([0, 120]); // mmHg
+  var chart = fc.chart.cartesian(xScale)
+      .yDomain([0, 120]); // BPM
 
-  var HRSeries = fc.series.line()
+  var series = fc.series.line()
       .xValue(function(d) { return d.time; })
       .yValue(function(d) { return d.value; });
 
   var multi = fc.series.multi()
-      .series([/*gridlines,*/ HRSeries/*, tooltipLayout, crosshairs*/])
+      .series([/*gridlines,*/ series/*, tooltipLayout, crosshairs*/])
       .mapping(function(series) {
           switch (series) {
             /*case crosshairs:
@@ -42,7 +35,6 @@ un.graphs.HR = function(){
       /*
         Draw the heart rate graph onto this selection.
       */
-      console.log("_un.graphs.HR.draw")
 
       selection.each(function(data) {
           chart.xDomain(data.dateDomain)
@@ -67,34 +59,54 @@ un.graphs.HR = function(){
 }
 
 un.graphs.BP = function(){
-  console.log("_un.graphs.BP")
   var event = d3.dispatch("crosshair", "zoom");
 
-  var chart = fc.chart.cartesian(
-          d3.time.scale(),
-          d3.time.scale())
-      .xDomain([0, 170]) // minutes
-      .yDomain([0, 120]); // mmHg
+  var xScale = d3.time.scale();
+  var chart = fc.chart.cartesian(xScale)
+      .yDomain([0, 200]); // mmHg
 
-  var series = fc.series.line()
+  var series = un.series.BP()
       .xValue(function(d) { return d.time; })
       .yValue(function(d) { return d.systolic; });
 
   var multi = fc.series.multi()
-      .series([series])
+      .series([/*gridlines,*/ series/*, tooltipLayout, crosshairs*/])
       .mapping(function(series) {
           switch (series) {
-          case series:
+            /*case crosshairs:
+            case tooltipLayout:
+              return this.crosshairs;
+            case annotation:
+              return this.targets;*/
+            default:
               return this;
-          case annotation:
-              return this.targets;
           }
       });
 
   chart.plotArea(multi);
 
   function draw(selection) {
-      selection.call(chart)
+    /*
+      Draw the blood pressure graph onto this selection.
+    */
+
+    selection.each(function(data) {
+        chart.xDomain(data.dateDomain)
+
+        var selection = d3.select(this) // can this be put outside 'each'?
+            .call(chart);
+
+        // Zoom goes nuts if you re-use an instance and also can"t set
+        // the scale on zoom until it"s been initialised by chart.
+        var zoom = d3.behavior.zoom()
+            .on("zoom", function() {
+                event.zoom.call(this, xScale.domain());
+            })
+            .x(xScale);
+
+        selection.call(zoom);
+    });
+
   }
   d3.rebind(draw, event, "on");
   return draw;
@@ -105,7 +117,6 @@ un.charts.vs = function(){
   /*
     Initialise a vital signs chart.
   */
-  console.log("_un.charts.vs")
   var event = d3.dispatch("navigate", "crosshair");
 
   /*
@@ -148,16 +159,7 @@ un.charts.vs = function(){
       /*
         Draw the vital signs chart onto this selection.
       */
-      console.log("_un.charts.vs.draw")
-      /*
-      selection.select("svg.graph_HR").datum(data.HR)
-          .call(HRGraph);
-      selection.select("svg.graph_BP").datum(data.BP)
-          .call(BPGraph);
-      */
-
       selection.each(function(data) {
-        console.log("_un.charts.vs.draw#each")
         // draw each graph:
         for(var graph_i in graphs){
             var visibleData = data[graph_i].slice(

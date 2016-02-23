@@ -408,7 +408,6 @@ stamp = function(selection, data) {
 
     render();
 };
-console.log(data)
 stamp(d3.select("#low-barrel"), data)
 
 //$(window).resize(fc.util.render(render));
