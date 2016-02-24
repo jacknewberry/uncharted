@@ -389,9 +389,8 @@ data.navigatorYDomain = fc.util.extent().fields("close")(data);
 
 
 stamp = function(selection, data) {
-    var container = selection.layout(); // Not sure what this does
-
     var render = fc.util.render(function() {
+        var container = selection.layout(); // Layout using flexbox
         container.datum(data)
             .call(lowBarrel);
     });
@@ -407,7 +406,6 @@ stamp = function(selection, data) {
         });
 
     render();
+    $(window).resize(fc.util.render(render));
 };
 stamp(d3.select("#low-barrel"), data)
-
-//$(window).resize(fc.util.render(render));

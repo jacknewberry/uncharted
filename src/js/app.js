@@ -216,12 +216,13 @@ var maxDate = data.navDateDomain[1];
 var minDate = new Date(data.navDateDomain[0].getTime() + (data.navDateDomain[1].getTime()-data.navDateDomain[0].getTime())*0.8);
 data.dateDomain = [minDate, maxDate];
 
-function render() {
+// fc.util.render waits until the next 'requestAnimationFrame'
+var render = fc.util.render(function() {
     // give the fresh data to the chart and stamp onto the DOM
     d3.select("#practice-chart")
         .datum(data)
         .call(vsChart);
-}
+});
 
 // make an instance of the chart
 var vsChart = un.charts.vs()
@@ -231,7 +232,9 @@ var vsChart = un.charts.vs()
             new Date(Math.max(domain[0], data.navDateDomain[0])),
             new Date(Math.min(domain[1], data.navDateDomain[1]))
         ];
-        render();
+        render()
     });
 
 render()
+
+$(window).resize(render);
