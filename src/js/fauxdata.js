@@ -48,6 +48,9 @@ fauxdata.getSomeData = function(amount, withGaps){
         // Occasionally provide no diastolic measurement
         if(newBP.diastolic > newBP.systolic){newBP.diastolic = undefined;}
         if(Math.random()>0.95){newBP.diastolic = undefined;}
+        else {
+            if(Math.random()>0.95){newBP.systolic = undefined;}
+        }
         out.BP.push(newBP)
     }
     time += 4*60*60*1000 // 4 hour obs

@@ -67,7 +67,8 @@ un.graphs.BP = function(){
 
   var series = un.series.BP()
       .xValue(function(d) { return d.time; })
-      .yValue(function(d) { return d.systolic; });
+      .yHighValue(function(d) { return d.systolic; })
+      .yLowValue(function(d) { return d.diastolic; });
 
   var multi = fc.series.multi()
       .series([/*gridlines,*/ series/*, tooltipLayout, crosshairs*/])
@@ -206,7 +207,7 @@ un.charts.vs = function(){
 
 
 // Make some data
-var data = fauxdata.getSomeData(30, false)
+var data = fauxdata.getSomeData(50, false)
 
 data.crosshairs = [];
 data.navDateDomain = fc.util.extent().fields("time")([data.HR, data.BP]);
