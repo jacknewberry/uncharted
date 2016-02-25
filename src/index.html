@@ -7,12 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come after these tags -->
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Jack Newberry">
     <link rel="icon" href="redheart.png">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Uncharted</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="third_party/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/d3fc/5.3.0/d3fc.min.css" rel="stylesheet"/>
 
@@ -78,10 +77,12 @@
           <h4 class="page-header">Hello!</h4>
 
 
+          <!-- uncharted -->
           <div id="practice-chart">
             <svg class="graph_HR" ></svg>
             <svg class="graph_BP" ></svg>
           </div>
+          <!-- End uncharted -->
 
 
           <!-- D3FC Low Barrel -->
@@ -244,10 +245,8 @@
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="third_party/jquery-1.12.0.min.js"></script> <!-- it would be nice not to need this -->
+
+    <script src="third_party/jquery-1.12.0.min.js"></script> <!-- bootstrap needs this -->
     <script src="third_party/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3fc/5.3.0/d3fc.bundle.min.js"></script>
@@ -255,8 +254,12 @@
     <script src="js/finance.js"></script>
 
     <script src="js/uncharted.js"></script>
-    <script src="js/series.js"></script>
     <script src="js/fauxdata.js"></script>
+    <script src="js/annotations.js"></script>
+    <script src="js/series.js"></script>
+    <script src="js/graph.HR.js"></script>
+    <script src="js/graph.BP.js"></script>
+    <script src="js/chart.vitalsigns.js"></script>
     <script src="js/app.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

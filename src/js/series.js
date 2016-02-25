@@ -144,15 +144,15 @@ un.SVG.BPLineGenerator = function(){
     var x = function(d, i) { return d.x; },
         //high = function(d, i) { return d.high; },
         //low = function(d, i) { return d.low; },
-        arrowWidth = d3.functor(5),
-        arrowHeight = d3.functor(4);
+        arrowWidth = d3.functor(4),
+        arrowHeight = d3.functor(5);
 
     var generator = function(data) {
         return data.map(function(d, i, data) {
             /*
               d is this datum, i is its index, data is the whole data array.
             */
-            var _x = x(d, i),
+            var _x = Math.floor(x(d, i))+0.5, // to produce crisp edges with antialised arrows. 
                 _aWidth = arrowWidth(d, i),
                 halfWidth = _aWidth / 2,
                 _aHeight = arrowHeight(d, i),
