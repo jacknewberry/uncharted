@@ -23,8 +23,8 @@ fauxdata.getSomeData = function(amount, withGaps){
   var walk = fc.data.random.walk()
     .period(1)   // Projection period, by default = 1
     .steps(amount)   // Number of steps to take, by default = 20
-    .mu(0.1)     // Drift component, by default = 0.1
-    .sigma(0.1); // Volatility, by default = 0.1
+    .mu(0.5)     // Drift component, by default = 0.1
+    .sigma(0.2); // Volatility, by default = 0.1
   var warningLevels = walk(100) // the walk starts from 100
 
   var time = new Date().getTime() // start at the current datetime as an integer
@@ -43,7 +43,7 @@ fauxdata.getSomeData = function(amount, withGaps){
         newBP = {}
         /*vary time by 20 minutes*/
         newBP.time = new Date(time + Math.random()*20*60*1000);
-        newBP.systolic = Math.floor(warningLevels[wl] + 20 + Math.random()*20)
+        newBP.systolic = Math.floor(warningLevels[wl] + 20 + Math.random()*40)
         newBP.diastolic = Math.floor(newBP.systolic - 20 - (newBP.systolic*0.3))
         // Occasionally provide no diastolic measurement
         if(newBP.diastolic > newBP.systolic){newBP.diastolic = undefined;}

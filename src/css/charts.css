@@ -8,10 +8,22 @@
 #practice-chart svg {
   width: 100%;
   shape-rendering: crispEdges;
-  	display: block;
+  display: block;
 }
 #practice-chart svg.graph_BP .line {
   stroke: #CC1111;
+  //shape-rendering: crispEdges;
+}
+#practice-chart svg.graph_HR .line {
+  stroke: rgb(0, 102, 204);
+}
+
+.gridline {
+  stroke: #ddd;
+}
+
+.gridline .minor {
+  stroke-opacity: .5;
 }
 
 rect.background {
