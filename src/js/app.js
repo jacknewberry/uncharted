@@ -21,6 +21,13 @@ var minDate = new Date(data.navDateDomain[0].getTime() + (data.navDateDomain[1].
 data.dateDomain = [minDate, maxDate];
 
 
+/*
+  The d3fc framework does not try to make rendering optimisations, it is expected that the whole chart will be re-rendered after any change.
+  see https://d3fc.io/components/introduction/component-design.html
+
+  This is a potential source of lag for the user, expecially running on older hospital machines or mobile devices.
+  I'm choosing to ignore it for the moment.
+*/
 // fc.util.render waits until the next 'requestAnimationFrame'
 var render = fc.util.render(function() {
     // give the fresh data to the chart and stamp onto the DOM
@@ -30,8 +37,8 @@ var render = fc.util.render(function() {
 });
 
 // make an instance of the chart:
-var vsChart = un.charts.vs()
-    .on("crosshair", render)
+var vsChart = un.charts.vs(d3.select("#practice-chart"))
+    .on("crosshair", render) // it would be faster if this didn't re-render the whole chart.
     .on("navigate", function(domain) {
 
         data.dateDomain = [

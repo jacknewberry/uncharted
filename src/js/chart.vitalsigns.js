@@ -1,44 +1,34 @@
-// Define a vitals chart, using several graphs
-un.charts.vs = function(){
+un.charts.vs = function(templateSelection){
   /*
     Initialise a vital signs chart.
   */
   var event = d3.dispatch("navigate", "crosshair");
 
   /*
-  var mainChart = uncharted.graphs.mainChart()
-      .on("crosshair", event.crosshair)
-      .on("zoom", event.navigate);
-
-  var volumeChart = uncharted.graphs.volumeChart()
-      .on("crosshair", event.crosshair);
-
   var navigatorChart = uncharted.graphs.navigatorChart()
       .on("brush", event.navigate);
   */
 
   var graphs = {};
-  graphs.HR = un.graphs.HR()
-      .on("crosshair", event.crosshair)
-      .on("zoom", event.navigate);
-  graphs.BP = un.graphs.BP()
-      .on("crosshair", event.crosshair)
-      .on("zoom", event.navigate);
-      //.on("brush", event.navigate);
+  // parse the template selection and make graphs depending on the HTML
+  templateSelection.selectAll(".graph")
+    .each(function(d, i){
+      /*
+        the dataset variable retrieves any custom HTML 'data-' attributes.
+        see: http://bl.ocks.org/mbostock/1323729
+        Trick for young players: dataset is only available on HTML elements, not on <svg>. Thus the template html uses <div> tags for charts.
+      */
+      //console.log(this.id)
+      //console.log(this.dataset)
+      //console.log(this.dataset.graph)
+      graphs[this.id] = un.graphs[this.dataset.graph]()
+          .on("crosshair", event.crosshair)
+          .on("zoom", event.navigate);
+          //.on("brush", event.navigate);
+      graphs[this.id].datalabel = this.dataset.datalabel;
 
-  /*
-  container.select("svg.main")
-      .datum(visibleData)
-      .call(mainChart);
+    })
 
-  container.select("svg.volume")
-      .datum(visibleData)
-      .call(volumeChart);
-
-  container.select("svg.navigator")
-      .datum(data)
-      .call(navigatorChart);
-  */
   var bisector = d3.bisector(function(d) { return d.time; });
 
   function draw(selection){
@@ -48,41 +38,19 @@ un.charts.vs = function(){
       selection.each(function(data) {
         // draw each graph:
         for(var graph_i in graphs){
-            var visibleData = data[graph_i].slice(
+            var _data = data[graphs[graph_i].datalabel];
+            var visibleData = _data.slice(
                 // Pad and clamp the bisector values to ensure extents can be calculated
-                Math.max(0, bisector.left(data[graph_i], data.dateDomain[0]) - 1),
-                Math.min(bisector.right(data[graph_i], data.dateDomain[1]) + 1, data[graph_i].length)
+                Math.max(0, bisector.left(_data, data.dateDomain[0]) - 1),
+                Math.min(bisector.right(_data, data.dateDomain[1]) + 1, _data.length)
             );
             visibleData.dateDomain = data.dateDomain;
             visibleData.crosshairs = data.crosshairs;
             var selection = d3.select(this);
-            selection.select("svg.graph_"+graph_i)
+            selection.select("#"+graph_i)
                 .datum(visibleData)
                 .call(graphs[graph_i]);
         }
-        /*
-        var visibleData = data.slice(
-            // Pad and clamp the bisector values to ensure extents can be calculated
-            Math.max(0, bisector.left(data, data.dateDomain[0]) - 1),
-            Math.min(bisector.right(data, data.dateDomain[1]) + 1, data.length)
-        );
-        visibleData.dateDomain = data.dateDomain;
-        visibleData.crosshairs = data.crosshairs;
-
-        var container = d3.select(this);
-
-        container.select("svg.graph_HR")
-            .datum(visibleData)
-            .call(HRGraph);
-
-        container.select("svg.graph_BP")
-            .datum(visibleData)
-            .call(BPGraph);
-            */
-
-        /*container.select("svg.navigator")
-            .datum(data)
-            .call(navigatorChart);*/
       })
 
   }

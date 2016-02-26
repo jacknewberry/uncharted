@@ -133,6 +133,8 @@ un.SVG.BPLineGenerator = function(){
      |    |   |         |    |          |   |         |
           |             |               |
 
+          (you have to imagine the arrows)
+
     Process a sequence of x, high and low values into an SVG path
     the SVG path is described in the SVG path mini-language for use as the 'd' attr. see: https://www.dashingd3js.com/svg-paths-and-d3js
 
@@ -142,8 +144,8 @@ un.SVG.BPLineGenerator = function(){
     - future: draw plain lines for data too close to fit arrows.
     */
     var x = function(d, i) { return d.x; },
-        //high = function(d, i) { return d.high; },
-        //low = function(d, i) { return d.low; },
+        high = function(d, i) { return d.high; },
+        low = function(d, i) { return d.low; },
         arrowWidth = d3.functor(4),
         arrowHeight = d3.functor(5);
 
@@ -152,7 +154,7 @@ un.SVG.BPLineGenerator = function(){
             /*
               d is this datum, i is its index, data is the whole data array.
             */
-            var _x = Math.floor(x(d, i))+0.5, // to produce crisp edges with antialised arrows. 
+            var _x = Math.floor(x(d, i))+0.5, // to produce crisp edges with antialised arrows.
                 _aWidth = arrowWidth(d, i),
                 halfWidth = _aWidth / 2,
                 _aHeight = arrowHeight(d, i),

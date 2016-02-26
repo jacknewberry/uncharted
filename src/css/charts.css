@@ -10,11 +10,11 @@
   shape-rendering: crispEdges;
   display: block;
 }
-#practice-chart svg.graph_BP .line {
+#practice-chart div[data-graph="BP"] .line {
   stroke: #CC1111;
   //shape-rendering: crispEdges;
 }
-#practice-chart svg.graph_HR .line {
+#practice-chart div[data-graph="HR"] .line {
   stroke: rgb(0, 102, 204);
 }
 

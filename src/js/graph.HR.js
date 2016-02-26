@@ -6,7 +6,13 @@ un.graphs.HR = function(){
 
   var xScale = d3.time.scale();
   var chart = fc.chart.cartesian(xScale)
-      //.yDomain([0, 120]); // BPM
+      .xTicks(0)
+      .yTicks(6)
+      //.yLabel('Heart Rate')
+      .yNice()
+      //.yOrient('left')
+      //.xBaseline(0)
+      //.margin({bottom: 2, top: 2});
 
   var series = fc.series.line()
       .xValue(function(d) { return d.time; })
@@ -15,6 +21,13 @@ un.graphs.HR = function(){
   var gridlines = fc.annotation.gridline()
       .xTicks(24) //(d3.time.hours, 2)
       .yTicks(7)
+
+  var annotation = fc.annotation.line()
+        .value(function(d) { return d.value; })
+        .label(function(d) { return d.name +" - "+d.value; })
+        .decorate(function(selection){
+            //
+        })
 
   var crosshairs = fc.tool.crosshair()
       .xLabel("")
@@ -28,14 +41,21 @@ un.graphs.HR = function(){
       })
 
   var multi = fc.series.multi()
-      .series([gridlines, series, crosshairs/*, tooltipLayout*/])
+      .series([gridlines, series, crosshairs, annotation/*, tooltipLayout*/])
       .mapping(function(series) {
           switch (series) {
             //case tooltipLayout:
             case crosshairs:
               return this.crosshairs;
-            /*case annotation:
-              return this.targets;*/
+            case annotation:
+              return [{
+                          name: 'low',
+                          value: 60
+                      }, {
+                          name: 'high',
+                          value: 100
+                      }];
+              //return this.targets;
             default:
               return this;
           }

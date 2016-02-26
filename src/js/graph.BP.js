@@ -3,11 +3,12 @@ un.graphs.BP = function(){
 
   var xScale = d3.time.scale();
   var chart = fc.chart.cartesian(xScale)
+      .yTicks(6)
 
   var series = un.series.BP()
       .xValue(function(d) { return d.time; })
       .yHighValue(function(d) { return d.systolic; })
-      .yLowValue(function(d) { return d.diastolic; });
+      .yLowValue(function(d) { return d.diastolic; })
 
   var gridlines = fc.annotation.gridline()
       .xTicks(24) //(d3.time.hours, 2)

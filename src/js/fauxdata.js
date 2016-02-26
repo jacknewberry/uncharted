@@ -24,7 +24,7 @@ fauxdata.getSomeData = function(amount, withGaps){
     .period(1)   // Projection period, by default = 1
     .steps(amount)   // Number of steps to take, by default = 20
     .mu(0.5)     // Drift component, by default = 0.1
-    .sigma(0.2); // Volatility, by default = 0.1
+    .sigma(0.3); // Volatility, by default = 0.1
   var warningLevels = walk(100) // the walk starts from 100
 
   var time = new Date().getTime() // start at the current datetime as an integer
