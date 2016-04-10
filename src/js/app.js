@@ -1,11 +1,14 @@
+"use-strict";
+
+
 // requires uncharted
+
 
 /*
     This file is a little chaotic
     it should do the least possible to instantiate a chart onto the DOM.
 */
 var data = fauxdata.getSomeData(150, false)
-
 
 // Prepare the chart settings on the data
 data.crosshairs = [];

@@ -18,7 +18,7 @@ fauxdata.getSomeData = function(amount, withGaps){
     A random walk is used to generate a 'warning level' from which the measurements are computed. This is so there are nice trends in the data similar to in a real patient.
     The real EWS can then be calculated from the measurements
   */
-  out = {BP:[], HR:[]}
+  out = {BP:[], HR:[], Temp:[]}
 
   var walk = fc.data.random.walk()
     .period(1)   // Projection period, by default = 1
@@ -31,27 +31,39 @@ fauxdata.getSomeData = function(amount, withGaps){
 
   for(var wl in warningLevels){
     // Generate a heart rate measurement
-    if(Math.random()<0.90){
-        newHR = {}
-        /*vary time by 20 minutes*/
-        newHR.time = new Date(time + Math.random()*20*60*1000);
-        newHR.value = Math.floor(warningLevels[wl] - 20 - Math.random()*15)
-        out.HR.push(newHR)
+    if(wl<amount*0.33 || wl>amount*0.66){ // miss the middle third
+      if(Math.random()<0.90){
+          newHR = {}
+          /*vary time by 20 minutes*/
+          newHR.time = new Date(time + Math.random()*20*60*1000);
+          newHR.value = Math.floor(warningLevels[wl] - 20 - Math.random()*15)
+          out.HR.push(newHR)
+      }
     }
     // Generate a BP measurement
-    if(Math.random()<0.90){
-        newBP = {}
+    if(wl<amount*0.5 || wl>amount*0.66){ // miss the 4th 6th
+      if(Math.random()<0.90){
+          newBP = {}
+          /*vary time by 20 minutes*/
+          newBP.time = new Date(time + Math.random()*20*60*1000);
+          newBP.systolic = Math.floor(warningLevels[wl] + 20 + Math.random()*40)
+          newBP.diastolic = Math.floor(newBP.systolic - 20 - (newBP.systolic*0.3))
+          // Occasionally provide no diastolic measurement
+          if(newBP.diastolic > newBP.systolic){newBP.diastolic = undefined;}
+          if(Math.random()>0.95){newBP.diastolic = undefined;}
+          else {
+              if(Math.random()>0.95){newBP.systolic = undefined;}
+          }
+          out.BP.push(newBP)
+      }
+    }
+    // Generate a new temperature measurement
+    if(Math.random()<0.60){
+        newTemp = {}
         /*vary time by 20 minutes*/
-        newBP.time = new Date(time + Math.random()*20*60*1000);
-        newBP.systolic = Math.floor(warningLevels[wl] + 20 + Math.random()*40)
-        newBP.diastolic = Math.floor(newBP.systolic - 20 - (newBP.systolic*0.3))
-        // Occasionally provide no diastolic measurement
-        if(newBP.diastolic > newBP.systolic){newBP.diastolic = undefined;}
-        if(Math.random()>0.95){newBP.diastolic = undefined;}
-        else {
-            if(Math.random()>0.95){newBP.systolic = undefined;}
-        }
-        out.BP.push(newBP)
+        newTemp.time = new Date(time + Math.random()*20*60*1000);
+        newTemp.value = d3.random.normal(37.2, 0.5)()
+        out.Temp.push(newTemp)
     }
     time += 4*60*60*1000 // 4 hour obs
   }

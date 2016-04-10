@@ -1,5 +1,8 @@
-# uncharted
-Web based graph application
+# Uncharted
+Web based medical graph application
+
+Uncharted plans to use [Semantic Versioning](http://semver.org/).
+Everything is scoped under the uncharted `un` namespace.
 
 
 ## Purpose
@@ -68,11 +71,13 @@ Uncharted brings these benefits:
 
 _Chart Stream:_
 
-- [ ] Make one graph of this chart have bars for blood pressure
+- [x] Make one graph of this chart have bars for blood pressure
 - [x] change the other into a line graph for heart rate
-- [ ] replace the d3fc example data with some more realistic dummy clinical measurements
+- [x] replace the d3fc example data with some more realistic dummy clinical measurements
 - [ ] display d3fc line annotations to give better context to the data
 - [ ] also display the value labels for the maximum, minimum, and most recent data points
+- [ ] make 'unpinned' graphs disappear when there is no data in-view.
+- [ ] separate the x axis into its own separate 'graph'
 - [ ] take the team out for dinner
 - [ ] write more step-by-step instructions, the next focus is data entry
 

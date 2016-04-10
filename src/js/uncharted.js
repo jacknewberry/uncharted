@@ -2,5 +2,6 @@ un = {
 	charts:{},
 	graphs:{},
 	series:{},
-	SVG:{}
+	SVG:{},
+	annotation:{}
 }

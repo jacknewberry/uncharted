@@ -1,6 +1,6 @@
-un.graphs.HR = function(){
+un.graphs.Temp = function(){
   /*
-    Initialise a heart rate graph.
+    Initialise a temperature graph.
   */
   var event = d3.dispatch("crosshair", "zoom");
 
@@ -52,11 +52,8 @@ un.graphs.HR = function(){
               return this;
             case annotation:
               return [{
-                          name: 'low',
-                          value: 60
-                      }, {
-                          name: 'high',
-                          value: 100
+                          name: 'fever',
+                          value: 37.5
                       }];
               //return this.targets;
             default:
@@ -73,10 +70,10 @@ un.graphs.HR = function(){
 
       selection.each(function(data) {
           var _yDomain = fc.util.extent()
-                   .include(0)
+                   .include(36)
                    .fields("value")(data);
           // d3fc extent.include can only include a single value
-          if(_yDomain[1] < 120){_yDomain[1] = 120;} // also include 120
+          if(_yDomain[1] < 39){_yDomain[1] = 39;} // also include 120
 
           chart.xDomain(data.dateDomain)
                .yDomain(_yDomain)

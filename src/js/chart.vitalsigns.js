@@ -1,3 +1,5 @@
+"use-strict";
+
 un.charts.vs = function(templateSelection){
   /*
     Initialise a vital signs chart.
@@ -46,7 +48,18 @@ un.charts.vs = function(templateSelection){
             );
             visibleData.dateDomain = data.dateDomain;
             visibleData.crosshairs = data.crosshairs;
+
             var selection = d3.select(this);
+
+            // Don't draw un-pinned graphs if there is no data in-view:
+            if(visibleData.length <= 2){
+              // TODO - this test is inacccurate and will lose the first and last item in the series.
+              console.log(selection.select("#"+graph_i))
+              selection.select("#"+graph_i)
+                  .style("opacity", 0);
+              continue;
+            }
+
             selection.select("#"+graph_i)
                 .datum(visibleData)
                 .call(graphs[graph_i]);
