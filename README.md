@@ -4,6 +4,7 @@ Web based medical graph application
 Uncharted plans to use [Semantic Versioning](http://semver.org/).
 Everything is scoped under the uncharted `un` namespace.
 
+[Live here](http://jacknewberry.github.io/uncharted/src/)
 
 ## Purpose
 To replace inpatient hospital paper-based charts
